@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WASM Guessing Game</title>
+</head>
+
+<body>
+  <h1>Guess the number!</h1>
+  <input type="number" id="userGuess">
+  <button id="guessBtn">Guess</button>
+  <p id="result"></p>
+
+  <script type="module" defer>
+    import init, {Game} from './pkg/wasm_guessing_game.js';
+
+    async function run() {
+      await init();
+      window.game = Game.new();
+    }
+
+    function makeGuess() {
+      const userGuess = parseInt(document.getElementById('userGuess').value);
+      const result = game.guess(userGuess);
+      document.getElementById('result').innerText = result;
+    }
+
+    window.addEventListener('load', () => {
+      document.getElementById('guessBtn').addEventListener('click', makeGuess);
+    });
+
+    run();
+  </script>
+</body>
+
+</html>
